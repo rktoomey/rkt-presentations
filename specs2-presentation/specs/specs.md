@@ -16,18 +16,18 @@
 
 - From specs to specs2
 - How does it work?
-  - Moving parts
-  - Unit specs and Acceptance specs
+    - Moving parts
+    - Unit specs and Acceptance specs
 - Migrating to specs2
-  - Dependencies
-  - Mutable unit specifications: the path of least resistence
-  - Acceptance specifications: full-on assimilation
+    - Dependencies
+    - Mutable unit specifications: the path of least resistence
+    - Acceptance specifications: full-on assimilation
 - Cool new features of specs2
 - How to guides
-  - contexts
-  - JSON matchers
-  - generate your user guide from acceptance specs
-  - Scalacheck
+    - contexts
+    - JSON matchers
+    - generate your user guide from acceptance specs
+    - Scalacheck
 - Online Resources
 
 !SLIDE
@@ -39,30 +39,22 @@
 
 # Online resources
 
-specs2
+- [http://specs2.org](http://specs2.org)
+    - [Quick Start](http://etorreborre.github.com/specs2/guide/org.specs2.guide.QuickStart.html)
+    - [User Guide](http://etorreborre.github.com/specs2/guide/org.specs2.UserGuide.html)
+    - [Sample project](https://github.com/etorreborre/specs2-test)
+    - [User Group](http://groups.google.com/group/specs2-users)
 <br/>
-[http://specs2.org](http://specs2.org)
-<br/>
-- [Quick Start](http://etorreborre.github.com/specs2/guide/org.specs2.guide.QuickStart.html)
-- [User Guide](http://etorreborre.github.com/specs2/guide/org.specs2.UserGuide.html)
-- [Sample project](https://github.com/etorreborre/specs2-test)
-<br/>
-<br/>
-Eric Torreborre
-<br/>
-[@etorreborre](http://twitter.com/#!/etorreborre)
-<br/>
-[Blog](http://etorreborre.blogspot.com/)
-<br/>
-<br/>
-Other projects
-<br/>
-- Scalaz
-- Scalacheck
-- Mockito
-- Fitnesse
 
+- Eric Torreborre
+    - [@etorreborre](http://twitter.com/#!/etorreborre)
+    - [Blog](http://etorreborre.blogspot.com/)
+<br/>
 
+- Other projects mentioned in these slides
+    - [Scalaz](https://github.com/scalaz/scalaz)
+    - [Scalacheck](http://code.google.com/p/scalacheck/)
+    - [Mockito](http://mockito.org/)
 
 
 !SLIDE
@@ -71,4 +63,4 @@ Other projects
 
 * [@softprops](http://twitter.com/softprops) for [picture-show](https://github.com/softprops/picture-show)
 
-<img class="logo" src="/sectionone/novus-logo.gif" />
+<img class="logo" src="/specs/novus-logo.gif" />
