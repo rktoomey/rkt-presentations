@@ -1,0 +1,8 @@
+img { 
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px; 
+  background:#eee;
+  padding:.15em;
+  height:50%;
+}

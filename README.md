@@ -1,3 +1,9 @@
+# this fork is for my presentations
+
+Based on Doug Tangren's awesome original project.
+
+So don't fork this, fork that instead.
+
 # picture show
 
 make slideshows with markdown
