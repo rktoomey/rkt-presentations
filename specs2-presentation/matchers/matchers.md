@@ -76,7 +76,21 @@ in the specs2 project specs for more details.
 
 !SLIDE
 
-# Defining your own matchers
+# specs2 matchers in the wild
+
+- Eric Torreborre's fork of ``lift/framework`` is using the new ``ParserMatchers`` trait to specify the parsers helpers
+    - [CombParserHelpersSpec](http://bit.ly/idczY2) using specs2
+    - compare with original [CombParserHelpersSpec](https://github.com/lift/framework/blob/master/core/util/src/test/scala/net/liftweb/util/CombParserHelpersSpec.scala) using specs 1.x
+
+- [Casbah](https://github.com/mongodb/casbah) is now using specs2
+    - shiny new custom ``DBObject`` matchers in [DBObjectMatchers](https://github.com/mongodb/casbah/blob/master/casbah-commons/src/main/scala/test/MongoDBSpecification.scala)
+    - usage examples in [DSLCoreOperatorsSpec](https://github.com/mongodb/casbah/blob/master/casbah-query/src/test/scala/DSLCoreOperatorsSpec.scala)
+    and [BarewordOperatorsSpec](https://github.com/mongodb/casbah/blob/master/casbah-query/src/test/scala/BarewordOperatorsSpec.scala)
+
+- TDD on Android using Robolectric with Specs2
+    - [https://github.com/jbrechtel/robospecs](https://github.com/jbrechtel/robospecs)
+
+- [Salat-Avro](https://github.com/T8Webware/salat-avro) has more examples of JSON matchers
 
 
 

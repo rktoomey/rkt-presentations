@@ -8,10 +8,8 @@
 
 ## Use case: migrating my own project
 
-On 9 March, I migrated [Salat](https://github.com/novus/salat/) from specs 1.6.7 to specs2 1.0.1.
-<br/>
-<br/>
-It took about two hours, and it was easy.
+On 9 March, I migrated [Salat](https://github.com/novus/salat/) from specs 1.6.7 to specs2 1.0.1.  It took
+about two hours, and it was easy.
 <br/>
 <br/>
 My strategy was as follows:
@@ -75,21 +73,10 @@ Drop in place and go:
 
     }
 
-!SLIDE
-
-# Migrating to specs2: restructuring my test trait
-
-No more ``detailedDiffs()`` - the default settings were good enough:
-
-    args(diffs=SmartDiffs(show, separators, triggerSize, shortenSize, diffRatio, full)
-
-No more ``PendingUntilFixed`` - in specs2 this is now part of the common specification features
-<br/>
-<br/>
-``doBeforeSpec`` has been replaced by overriding ``is`` with a ``Step`` to register Casbah's conversion helpers
-<br/>
-<br/>
-``doAfterSpec`` has been replaced by using ``^`` to glue a final step onto the supertrait's ``is`` method
+- No more ``detailedDiffs()`` - the default settings were good enough:
+- No more ``PendingUntilFixed`` - in specs2 this is now part of the common specification features
+- ``doBeforeSpec`` has been replaced by overriding ``is`` with a ``Step`` to register Casbah's conversion helpers
+- ``doAfterSpec`` has been replaced by using ``^`` to glue a final step onto the supertrait's ``is`` method
 
 !SLIDE
 
@@ -121,8 +108,9 @@ MongoDB collection.
 
     class SalatDAOSpec extends SalatSpec {
 
-      // which most specs can execute concurrently, this particular spec needs to execute sequentially to avoid mutating shared state,
-      // namely, the MongoDB collection referenced by the AlphaDAO
+      // which most specs can execute concurrently, this particular spec needs to execute sequentially
+      // to avoid mutating shared state: namely, the MongoDB collection referenced by the AlphaDAO
+
       override def is = args(sequential = true) ^ super.is
 
 
@@ -130,11 +118,12 @@ MongoDB collection.
 
 # Migrating to specs2: using scopes to set up data
 
-Unit specs have ``Scope``. a simple way of creating a new scope with variables that can be re-used in any example.
-
+Unit specs have ``Scope``, a simple way of creating a new scope with variables that can be re-used in any example.
+<br/>
+<br/>
 I used it to isolate the tedium of data setup so that my examples could focus on what I was really trying to achieve.
 
-    trait xiContext extends Scope {
+    trait xiScope extends Scope {
       log.debug("before: dropping %s", XiDAO.collection.getFullName())
       XiDAO.collection.drop()
       XiDAO.collection.count must_== 0L
@@ -153,9 +142,9 @@ I used it to isolate the tedium of data setup so that my examples could focus on
 
 # Migrating to specs2: using a scope
 
-My new ``xiContext`` can be used as easily as:
+My new ``xiScope`` can be used as easily as:
 
-    "support using a projection on an Option field to filter out Nones" in new xiContext {
+    "support using a projection on an Option field to filter out Nones" in new xiScope {
       // a projection on a findOne that matches xi1
       XiDAO.primitiveProjection[String](MongoDBObject("x" -> "x1"), "y") must beSome("y1")
       // a projection on a findOne that brings nothing back
@@ -164,6 +153,47 @@ My new ``xiContext`` can be used as easily as:
       val projList = XiDAO.primitiveProjections[String](MongoDBObject(), "y")
       projList must haveSize(4)
       projList must contain("y1", "y2", "y3", "y4") // xi5 has a null value for y, not in the list
+    }
+
+!SLIDE
+
+# Control execution and reporting
+
+Use [arguments](http://etorreborre.github.com/specs2/guide/org.specs2.guide.Runners.html#Arguments).    It's that easy.
+
+Inside a spec, pass them in to ``is``.  For instance, let's say you are working inside a web framework and
+you want to filter stacktraces to show only your own code.
+
+    def is = args(traceFilter = includeTrace("com.foo.confabulator"))
+
+In sbt, you can pass in arguments: the example shown below will output to both console and html.
+
+    > test-only com.foo.confabulator.test.TryHarderSpec -- html console
+
+!SLIDE
+
+# JUnit Integratation
+
+    class WithJUnitSpec extends SpecificationWithJUnit {
+      "My spec" should {
+        "run in JUnit too" in {
+          success
+        }
+      }
+    }
+
+For IDE support, you can still use ``@Runner``:
+
+    import org.junit.runner._
+    import runner._
+
+    @RunWith(classOf[JUnitRunner])
+    class WithJUnitSpec extends Specification {
+      "My spec" should {
+        "run in JUnit too" in {
+          success
+        }
+      }
     }
 
 

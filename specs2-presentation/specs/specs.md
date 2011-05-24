@@ -8,21 +8,27 @@
 <p style="font-size: 45px; color: #16325A; font-style: italic;">What's new in the Scala BDD world?</p>
 <br/>
 <br/>
+<br/>
+<br/>
+<br/>
 [http://specs2.org](http://specs2.org)
 
 !SLIDE
 
 # specs2: State of the art executable software specifications
 
-``TODO: still in flux``
-
 - The evolution of specs2
+- Field guide to specs2
+    - acceptance specs
+    - unit specs
 - Migrating to specs2
     - Test case: migrating Salat
+    - Configuring specs2
 - Cool new features of specs2
     - JSON matchers
+    - Specs2 matchers in the wild
+    - Contexts
     - Scalacheck
-- Specs2 in the wild
 - Online Resources
 
 !SLIDE
@@ -53,8 +59,6 @@ specs2 is a <b><i>complete rewrite</i></b> of specs 1.x.
 - Use ``should`` / ``in`` format
     - ``in`` creates an ``Example`` object containing a ``Result``
     - ``should`` creates a group of ``Example`` objects
-<br/>
-<br/>
 
 ## Acceptance specs
 
@@ -64,7 +68,6 @@ specs2 is a <b><i>complete rewrite</i></b> of specs 1.x.
     - an optional ``SpecStart``
     - a list of ``Fragment`` objects
     - an options ``SpecEnd``
-<br/>
 <br/>
 
 Both types of specifications contain a list of specification fragments provided by the ``is`` method
@@ -94,12 +97,15 @@ in the ``SpecificationStructure`` trait.
 
 specs2 executes examples _concurrently_ by default.  You have to explicitly specify when you need
 sequential execution.
-
+<br/>
+<br/>
 Fragments are sorted in groups so that all the elements of the group can be executed concurrently.
-
+<br/>
+<br/>
 As each group of ``Example`` fragments runs concurrently, each ``Result`` is collected in a sequence of
  ``ExecutedFragments``, which are then reduced for reporting.
-
+<br/>
+<br/>
 ``Step`` can be used to break up the sequences in order to do some intitialisation or cleanup.
 
 !SLIDE
@@ -354,11 +360,14 @@ Yields:
 
 Acceptance specs matcher behaviour is to return an ``Expectable`` which handles applying the matcher
 and returning a ``Result``.
-
-Unit specs throw expectations as soon as they fail, .
-
+<br/>
+<br/>
+Unit specs throw expectations as soon as they fail.
+<br/>
+<br/>
 If you want acceptance specs to throw expectations like unit specs, mix in ``ThrownExpectations``.
-
+<br/>
+<br/>
 It doesn't change the functional behaviour of acceptance specs (i.e. only the returned ``Result``
 will affect the final outcome), but it's useful for interfacing with other test frameworks.
 

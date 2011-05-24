@@ -1,46 +1,5 @@
 !SLIDE
 
-# Control execution and reporting
-
-Use [arguments](http://etorreborre.github.com/specs2/guide/org.specs2.guide.Runners.html#Arguments).    It's that easy.
-
-Inside a spec, pass them in to ``is``.  For instance, let's say you are working inside a web framework and
-you want to filter stacktraces to show only your own code.
-
-    def is = args(traceFilter = includeTrace("com.foo.confabulator"))
-
-In sbt, you can pass in arguments: the example shown below will output to both console and html.
-
-    > test-only com.foo.confabulator.test.TryHarderSpec -- html console
-
-!SLIDE
-
-# JUnit Integratation
-
-    class WithJUnitSpec extends SpecificationWithJUnit {
-      "My spec" should {
-        "run in JUnit too" in {
-          success
-        }
-      }
-    }
-
-For IDE support, you can still use ``@Runner``:
-
-    import org.junit.runner._
-    import runner._
-
-    @RunWith(classOf[JUnitRunner])
-    class WithJUnitSpec extends Specification {
-      "My spec" should {
-        "run in JUnit too" in {
-          success
-        }
-      }
-    }
-
-!SLIDE
-
 # Contexts: making things happen when you need them
 
 When you want to make sure that something happens for every examples, use any combination of these traits:
@@ -52,9 +11,11 @@ When you want to make sure that something happens for every examples, use any co
 
 Contexts provide an ``apply`` method which can be applied to the body of an example so that your code
 is executed when you need it relative to the example code.
-
+<br/>
+<br/>
 Contexts of the same type can be composed and/or sequenced.
-
+<br/>
+<br/>
 Whereas ``Scope`` brings what's inside into context with a mutable spec, a Context is about having
 the appropriate method being executed when and where you need it (http connection, database operations).
 
@@ -153,10 +114,8 @@ There's always something special in a dusty corner...  Now it sees the light of 
 
 # This old spec: renovated
 
-The simplest way to make something happen beforehand: use ``Scope`` to leverage implicits
-that convert
-
-Stupidity contained, probably even compatible with specs3.  Yes!
+The simplest way to equip your examples with the state they expect: use ``Scope`` to create a reusable
+state sandbox and rebase the existing expectations to work with the new setup.
 
     class BetterIdea extends Specification {
 
@@ -181,11 +140,13 @@ Stupidity contained, probably even compatible with specs3.  Yes!
 
 !SLIDE
 
-# This old spec: renovated, but with a context this time
+# This old spec: what about context instead of scope?
 
-Now, imagine instead of a set, we were using shared mutable state like a database table.  Since I didn't
-want to introduce deps into my test code, pretend our ``Set[Int]`` is actually a database table.  Now
-using a ``Context`` instead of a ``Spec`` makes sense.
+Now, imagine instead of a set, we were using shared mutable state like a database table.
+<br/>
+<br/>
+Since I didn't want to introduce deps into my test code, pretend ``Before`` is actually populating
+a database table with known test data.  Now using a ``Context`` instead of a ``Spec`` makes sense.
 
     object setupData extends Before {
       var betterIdea = Set.empty[Int]
@@ -197,6 +158,7 @@ using a ``Context`` instead of a ``Spec`` makes sense.
 
     "or do it with a context instead" >> {
       "now my example will be executed inside the setupData context" >> setupData {
+        // sub in database access for "setupData.betterIdea"
         val newSet = setupData.betterIdea ++ (101 to 200).toSet
         newSet must have size (200)
       }
