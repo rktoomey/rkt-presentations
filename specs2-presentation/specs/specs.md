@@ -18,17 +18,11 @@
 
 - The evolution of specs2
 - Migrating to specs2
-    - Dependencies
-    - Mutable unit specifications: the path of least resistence
-    - Acceptance specifications: full-on assimilation
+    - Test case: migrating Salat
 - Cool new features of specs2
     - JSON matchers
     - Scalacheck
-    - Generate your user guide from acceptance specs
-- How to guides
-    - Using contexts
-    - Writing your own matchers
-    - Running in sequence when sharing mutable state
+- Specs2 in the wild
 - Online Resources
 
 !SLIDE
@@ -39,96 +33,8 @@ specs is a DSL in Scala for doing BDD (Behaviour-Driven Development).
 <br/>
 <br/>
 specs2 is a <b><i>complete rewrite</i></b> of specs 1.x.
-<br/>
-<br/>
-The design objectives of specs 1.x were:
-
-- conciseness
-- readability
-- extensibility
-- configuration
-- clear implementation
-- easy to fix and evolve
-
-
-!SLIDE
-
-# Recap of specs 1.x
-
-## Conciseness
-
-specs 1.x used the power of Scala implicits to provide an elegant syntax, but:
-
-- implicit methods were inherited from ``Specification``, causing unexpected implicit conversions and namespace pollution
-- reserved words like ``should``, ``can`` and ``in`` were not always convenient, and overriding them required ad hoc methods
-- ``given ... when ... then`` support required additional methods with no added value but displaying these words
-
-
-## Readability
-
-- large amounts of code interleaved into small amounts of text devolved into spaghetti
-- the [literate specs](http://code.google.com/p/specs/wiki/LiterateSpecifications#A_short_example) prototype was difficult to integrate with the rest of specs 1.x
-
-
-!SLIDE
-
-# Recap of specs 1.x
-
-## Extensibility
-
-Hindsight: it's very difficult to make something extensible without knowing what the requirements would be.
-
-- some of the matchers and runners written to enhance specs 1.x were worth integrating into specs2
-<br/>
-<br/>
-
-## Configuration
-
-Customising specs 1.x required a combination of property files, reflection and system properties
-
-- end result: user confusion, frustration and ugly hacks to work around "sensible defaults"
-
-!SLIDE
-
-# Recap of specs 1.x
-
-## Clear implementation
-
-In specs 1.x, the examples executed "on demand" when a runner asked the specification to report its successes and failures
-
-- the examples had to run to know what the outcome was and report it to the specification
-- ...but the examples ran without knowing their full execution context (what runs before and after)
-
-!SLIDE
-
-# Recap of specs 1.x
-
-Worse, specs did not <i>actually</i> execute in full isolation...
-
-- a feature intended to be helpful, [the automatic rest of local variables](http://code.google.com/p/specs/wiki/DeclareSpecifications#Execution_model) was an implementation nightmare
-- what appeared to be isolation where running one example did not affect surrounding variables was achieved by cloning and carefully copying state around
-
-!SLIDE
-
-# Recap of specs 1.x
-
-## Easy to fix and evolve
-
-The design of specs 1.x with lots of variables and side-effects made being responsive to users harder than
-it had to be:
-
-- dianosing bugs and fixing issues takes longer
-- adding enhancements became complicated, in some cases nearly impossible
-
-!SLIDE
-
-# A New Deal
-
-specs2 preserves the elegant DSL of specs 1.x but with a simpler, more robust implementation.
 
 ## The design principles of specs2
-<br/>
-
 <ol>
   <li>Do not use mutable variables</li>
   <li>Use a simple structure</li>
@@ -145,6 +51,8 @@ specs2 preserves the elegant DSL of specs 1.x but with a simpler, more robust im
 - Extend the ``org.specs2.mutable.Specification`` trait
 - are mutable
 - Use ``should`` / ``in`` format
+    - ``in`` creates an ``Example`` object containing a ``Result``
+    - ``should`` creates a group of ``Example`` objects
 <br/>
 <br/>
 
@@ -159,9 +67,8 @@ specs2 preserves the elegant DSL of specs 1.x but with a simpler, more robust im
 <br/>
 <br/>
 
-## What do they both do?
-
-Create a list of _specification fragments_.  But very differently!
+Both types of specifications contain a list of specification fragments provided by the ``is`` method
+in the ``SpecificationStructure`` trait.
 
 !SLIDE
 
@@ -169,13 +76,54 @@ Create a list of _specification fragments_.  But very differently!
 
 - Simple text
     - to describe the test case
-- An example
+- Examples
     - a description and executable code that returns a ``Result``, such as
         - a standard result (success, failure)
         - a matcher result
         - a boolean value
+- Steps and actions that return success or failure
+    - reported only if an exception occurs
+- ``SpecStart`` and ``SpecEnd`` delimiters in acceptance specs
+- tagging fragments to define which fragments should be included or excluded
 - formatting fragments
     -  such as line breaks and tabs to make the test output pleasing to the eye
+
+!SLIDE
+
+# Execution
+
+specs2 executes examples _concurrently_ by default.  You have to explicitly specify when you need
+sequential execution.
+
+Fragments are sorted in groups so that all the elements of the group can be executed concurrently.
+
+As each group of ``Example`` fragments runs concurrently, each ``Result`` is collected in a sequence of
+ ``ExecutedFragments``, which are then reduced for reporting.
+
+``Step`` can be used to break up the sequences in order to do some intitialisation or cleanup.
+
+!SLIDE
+
+# What is a result?
+
+An instance of ``org.specs2.executable.Result`` contains:
+
+- a message describing the outcome
+- a message describing the expectation(s)
+
+``StandardResults`` indicate the result of executing an example:
+
+- ``success``
+- ``failure``
+- ``anError``
+- ``pending``
+- ``skipped``
+
+A ``MatcherResult`` contains the outcome of an expectation, such as
+
+    "hello" must contain("lo")    // success
+    "hello" must contain("lz")    // failure
+
 
 !SLIDE
 
@@ -291,10 +239,17 @@ returns ``MatchResult[Any]``
 
 The specs2 user guide contains a detailed [Layout](http://etorreborre.github.com/specs2/guide/org.specs2.guide.SpecStructure.html#Layout)
 section explaining how acceptance specifications are formatted.
+<br/>
+<br/>
 
 Q: Will anything aid you with keeping acceptance specification syntax neatly lined up?
+<br/>
+<br/>
 
 A: Alas, not yet.
+<br/>
+<br/>
+
 
 Keep an eye on the [mailing list](http://groups.google.com/group/specs2-users) and
 [Scalariform](http://mdr.github.com/scalariform/) - someone will surely do something soon.
@@ -325,79 +280,10 @@ Fire up sbt and run
     [info] 6 examples, 0 failure, 0 error
     [info]
 
-!SLIDE
-
-# Results
-
-An instance of ``org.specs2.executable.Result`` contains:
-
-- a message describing the outcome
-- a message describing the expectation(s)
-
-``StandardResults`` indicate the result of executing an example:
-
-- ``success``
-- ``failure``
-- ``anError``
-- ``pending``
-- ``skipped``
-
-A ``MatcherResult`` contains the outcome of an expectation, such as
-
-    "hello" must contain("lo")    // success
-    "hello" must contain("lz")    // failure
 
 !SLIDE
 
-# Failure
-
-    > test-only prasinous.unit.FailedExpectationsSpec
-
-    [info] == prasinous.unit.FailedExpectationsSpec ==
-    [info] Bad expectations should
-    [error] x fail loudly
-    [error]     'olleh' is not equal to 'goodbye' (FailedExpectationsSpec.scala:10)
-    [info]
-    [info]
-    [info] Total for specification FailedExpectationsSpec
-    [info] Finished in 76 ms
-    [info] 1 example, 1 failure, 0 error
-    [info]
-    [info] == prasinous.unit.FailedExpectationsSpec ==
-
-!SLIDE
-
-# Error
-
-    > test-only prasinous.unit.ErrorDemoSpec
-
-    [info]
-    [info] == prasinous.unit.ErrorDemoSpec ==
-    [info] My shoddy Fibonacci sequence implementation should
-    [error] ! Fragment evaluation error
-    [error]     ThrowableException: Bored now. (FutureTask.java:138)
-    [error] prasinous.unit.ErrorDemoSpec.fibonacci(ErrorDemoSpec.scala:15)
-    [error] prasinous.unit.ErrorDemoSpec$$anonfun$1$$anonfun$apply$10$$anonfun$apply$11.apply(ErrorDemoSpec.scala:11)
-    [error] prasinous.unit.ErrorDemoSpec$$anonfun$1$$anonfun$apply$10$$anonfun$apply$11.apply(ErrorDemoSpec.scala:11)
-    [error] prasinous.unit.ErrorDemoSpec$$anonfun$1$$anonfun$apply$10.apply(ErrorDemoSpec.scala:11)
-    [error] prasinous.unit.ErrorDemoSpec$$anonfun$1$$anonfun$apply$10.apply(ErrorDemoSpec.scala:11)
-    [error] Bored now.
-    [error] prasinous.unit.ErrorDemoSpec.fibonacci(ErrorDemoSpec.scala:15)
-    [error] prasinous.unit.ErrorDemoSpec$$anonfun$1$$anonfun$apply$10$$anonfun$apply$11.apply(ErrorDemoSpec.scala:11)
-    [error] prasinous.unit.ErrorDemoSpec$$anonfun$1$$anonfun$apply$10$$anonfun$apply$11.apply(ErrorDemoSpec.scala:11)
-    [error] prasinous.unit.ErrorDemoSpec$$anonfun$1$$anonfun$apply$10.apply(ErrorDemoSpec.scala:11)
-    [error] prasinous.unit.ErrorDemoSpec$$anonfun$1$$anonfun$apply$10.apply(ErrorDemoSpec.scala:11)
-    [info]
-    [info]
-    [info] Total for specification ErrorDemoSpec
-    [info] Finished in 41 ms
-    [info] 1 example, 0 failure, 1 error
-    [info]
-    [info] == prasinous.unit.ErrorDemoSpec ==
-
-!SLIDE
-
-# Acceptance specs are functional
+# Acceptance specs are functional by default
 
     package prasinous.acceptance
 
@@ -428,29 +314,29 @@ Yields:
     [error]     1 is less than 9999 (FunctionalDemoSpec.scala:10)
     [info]
 
-
 !SLIDE
 
 # Mutable specs are not
 
-    package prasinous.unit
-
-    import org.specs2.mutable._
-
-    class NotFunctionalDemoSpec extends Specification {
+    class NotFunctionalDemoSpec extends org.specs2.mutable.Specification {
       "Mutable specs" should {
         "fail on any bad expectation" in {
-          e1
+          e1   // fails here
+          e2   // this is bad too, but we never get here until we fix e1
         }
         "fail on chained bad expectations too" in {
-          e2
+          e3
         }
       }
+
       def e1 = {
         1 must beGreaterThan(9999) // this MatchResult is NOT discarded
         1 must beLessThanOrEqualTo(1)
       }
-      def e2 = 1 must beGreaterThan(9999) and beLessThanOrEqualTo(1)
+      def e2 = {
+        1 must beGreaterThan(8888)  // this would fail but we never get here
+      }
+      def e3 = 1 must beGreaterThan(9999) and beLessThanOrEqualTo(1)
     }
 
 Yields:
@@ -462,17 +348,19 @@ Yields:
     [error] x fail on chained bad expectations too
     [error]     1 is less than 9999 (NotFunctionalDemoSpec.scala:12)
 
-
 !SLIDE
 
-# Migrating to specs2: negating matchers
+# Thrown expectations: a big difference
 
-Matchers now use ``not [matcher]`` format.
+Acceptance specs matcher behaviour is to return an ``Expectable`` which handles applying the matcher
+and returning a ``Result``.
 
-Was:
-    "My test string" must notContain("bingo")
+Unit specs throw expectations as soon as they fail, .
 
-Now:
-    "My test string" must not contain("bingo")
+If you want acceptance specs to throw expectations like unit specs, mix in ``ThrownExpectations``.
+
+It doesn't change the functional behaviour of acceptance specs (i.e. only the returned ``Result``
+will affect the final outcome), but it's useful for interfacing with other test frameworks.
+
 
 <img class="logo" src="/img/novus-logo.gif" />

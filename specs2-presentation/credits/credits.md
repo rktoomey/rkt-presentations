@@ -5,7 +5,6 @@
 - [http://specs2.org](http://specs2.org)
     - [Quick Start](http://etorreborre.github.com/specs2/guide/org.specs2.guide.QuickStart.html)
     - [User Guide](http://etorreborre.github.com/specs2/guide/org.specs2.UserGuide.html)
-    - [Philosophy](http://etorreborre.github.com/specs2/guide/org.specs2.guide.Philosophy.html)
     - [Sample project](https://github.com/etorreborre/specs2-test)
     - [User Group](http://groups.google.com/group/specs2-users)
 <br/>
@@ -23,6 +22,23 @@
 
 !SLIDE
 
+# specs2 in the wild
+
+- Eric Torreborre's fork of ``lift/framework`` is using the new ``ParserMatchers`` trait to specify the parsers helpers
+    - [CombParserHelpersSpec](http://bit.ly/idczY2) using specs2
+    - compare with original [CombParserHelpersSpec](https://github.com/lift/framework/blob/master/core/util/src/test/scala/net/liftweb/util/CombParserHelpersSpec.scala) using specs 1.x
+
+- [Casbah](https://github.com/mongodb/casbah) is now using specs2
+    - shiny new custom ``DBObject`` matchers in [DBObjectMatchers](https://github.com/mongodb/casbah/blob/master/casbah-commons/src/main/scala/test/MongoDBSpecification.scala)
+    - usage examples in [DSLCoreOperatorsSpec](https://github.com/mongodb/casbah/blob/master/casbah-query/src/test/scala/DSLCoreOperatorsSpec.scala)
+    and [BarewordOperatorsSpec](https://github.com/mongodb/casbah/blob/master/casbah-query/src/test/scala/BarewordOperatorsSpec.scala)
+
+- TDD on Android using Robolectric with Specs2
+    - [https://github.com/jbrechtel/robospecs](https://github.com/jbrechtel/robospecs)
+    - [Salat-Avro](https://github.com/T8Webware/salat-avro) has more examples of JSON matchers
+
+!SLIDE
+
 # Sample code
 
 - [Official specs2 examples](https://github.com/etorreborre/specs2/tree/1.3/src/test/scala/org/specs2/examples)
@@ -31,7 +47,12 @@
     - [Main conversion changeset](https://github.com/novus/salat/commit/493247fb8d9d5eeafb50f44fbceab1a0e6107af5)
     - [Cleanup work](https://github.com/novus/salat/commit/8903b1cf53c059208edff21d0b1737c0a40ad845)
     - [SalatDAOSpec](https://github.com/novus/salat/blob/master/salat-core/src/test/scala/com/novus/salat/test/dao/SalatDAOSpec.scala) showing using contexts and demonstrating how to run a test sequentially
+    - [SalatSpec](https://github.com/novus/salat/blob/master/salat-core/src/test/scala/com/novus/salat/test/SalatSpec.scala) - a mutable ``Specification`` trait that has before and after steps
 
+# Useful things to think about
+
+- [specs2 Philosophy](http://etorreborre.github.com/specs2/guide/org.specs2.guide.Philosophy.html)
+- Josh Suereth's NEScala symposium talk, [Implicits without the import tax](http://bit.ly/ev3qeS)
 
 !SLIDE
 

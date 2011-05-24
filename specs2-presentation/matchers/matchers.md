@@ -1,39 +1,47 @@
 !SLIDE
 
-# All about expectations
+# Matchers: making expectations easy
 
 In specs2, you can define expectations on anything that returns a ``Result``.
 
 - Boolean
 - Standard Results
-    - ``success``. ``failure``, ``anError``, ``pending``, etc.
+    - ``success``, ``failure``, ``anError``, ``pending``, etc.
 - Matcher result - specs2 has built in support for all these and more:
-  - Any
-  - Option / Either
-  - Strings and Numbers
-  - Exceptions
-  - Iterable and Maps
-  - XML and JSON
-  - Scalaz
+    - Any
+    - Option / Either
+    - Strings and Numbers
+    - Exceptions
+    - Iterable and Maps
+    - XML and JSON
+    - Scalaz
+    - Parser Combinator matchers
 - ScalaCheck property
 - Mock expectation
 - DataTable
 - Forms
 
+!SLIDE
 
-# Better error descriptions
+# Where to find information about matchers
+
+- [Matchers Guide](http://etorreborre.github.com/specs2/guide/org.specs2.guide.Matchers.html)
+- [specs2 matcher code](https://github.com/etorreborre/specs2/tree/master/src/main/scala/org/specs2/matcher)
+- [specs2 matcher specs](https://github.com/etorreborre/specs2/tree/master/src/test/scala/org/specs2/matcher)
 
 !SLIDE
 
 # Iterable matchers
 
-Iterable matchers are improved from specs 1.x:
+## specs 1.x:
 
     val list = List(1, 2, 3)
-    list must have size(2)
-    list  must contain(3, 2, 1)
+    list must have size(3)
+    list must containInOrder(1, 2, 3)
 
-Using specs2 ``only`` and ``inOrder`` can now be stated in a single line as:
+## specs2
+
+Using ``only`` and ``inOrder`` we can state this in one shot:
 
     List(1, 2, 3) must contain(1, 2, 3).only.inOrder
 
@@ -41,23 +49,27 @@ Using specs2 ``only`` and ``inOrder`` can now be stated in a single line as:
 
 # JSON matchers
 
-- ``/(value)`` looks for a value at the root of an Array
+``/(value)`` looks for a value at the root of an Array
 
     """["name", "Joe" ]""" must /("name")
 
-- ``/(key -> value)`` looks for a pair at the root of a Map
+``/(key -> value)`` looks for a pair at the root of a Map
 
     """{ "name": "Joe" }""" must /("name" -> "Joe")
     """{ "name": "Joe" }""" must not /("name2" -> "Joe")
+<br/>
 
-- ``*/(value)`` looks for a value present anywhere in a document, either
-    - as an entry in an Array
-    - as the value for a key in a Map
-- ``*/(key -> value)`` looks for a pair anywhere in the document
+``*/(value)`` looks for a value present anywhere in a document, either as an entry in an Array
+or as the value for a key in a Map
+
+``*/(key -> value)`` looks for a pair anywhere in the document
+<br/>
+<br/>
 
 JSON matchers can be chained:
 
     """{ "person": { "name": "Joe" } }""" must /("person") /("name" -> "Joe")
+<br/>
 
 See [JsonMatchersSpec](https://github.com/etorreborre/specs2/blob/master/src/test/scala/org/specs2/matcher/JsonMatchersSpec.scala)
 in the specs2 project specs for more details.
@@ -65,6 +77,7 @@ in the specs2 project specs for more details.
 !SLIDE
 
 # Defining your own matchers
+
 
 
 

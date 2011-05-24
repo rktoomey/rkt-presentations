@@ -28,9 +28,43 @@ td {
   border: #cccccc solid 1px;
 }
 
-pre, code {
-  font-family: Monospace !important;
-  font-size: 22px !important;  
+/*tt {*/
+    /*background-color: #F8F8F8;*/
+    /*border: 1px solid #DEDEDE;*/
+    /*border-radius: 3px 3px 3px 3px;*/
+    /*font-size: 13px;*/
+    /*padding: 0;*/
+/*}*/
+
+pre {
+    background-color: #F8F8F8;
+    border: 1px solid #CCCCCC;
+    border-radius: 3px;
+    font: 18px Monaco,"Courier New","DejaVu Sans Mono","Bitstream Vera Sans Mono",monospace !important;
+    line-height: 19px;
+    overflow: auto;
+    padding: 6px 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+pre code {
+    /*font: 20px Monaco,"Courier New","DejaVu Sans Mono","Bitstream Vera Sans Mono",monospace !important;*/
+    /*background-color: #F8F8F8;*/
+    border: 0px;
+    border-radius: 0px;
+    font: 19px Monaco,"Courier New","DejaVu Sans Mono","Bitstream Vera Sans Mono",monospace !important;
+    /*padding: 0px;*/
+}
+
+code {
+    /*font-family: Monospace !important;*/
+    /*font-size: 22px !important;*/
+    font: 23px Monaco,"Courier New","DejaVu Sans Mono","Bitstream Vera Sans Mono",monospace !important;
+    background-color: #F8F8F8;
+    border: 1px solid #DEDEDE;
+    border-radius: 3px;
+    padding: 0px;
 }
 
 h1 {
@@ -41,7 +75,9 @@ h1 {
 
 h2, h3 {
   color: #16325A !important;
-  font-size: 30px !important; 
+  font-size: 30px !important;
+  padding-bottom: 10px;
+  padding-top: 10px;
 }
 
 li {

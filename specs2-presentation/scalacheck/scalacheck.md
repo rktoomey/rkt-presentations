@@ -2,9 +2,10 @@
 
 # Given - When - Then
 
-``Given``, ``When`` and ``Then`` are now ``RegexSteps`` that can extract typed values from parameterized text:
-<br/>
-<br/>
+In specs 1.x, ``given``, ``when`` and ``then`` were methods with no added value but displaying these words with a
+description.
+
+In specs2, ``Given``, ``When`` and ``Then`` are now ``RegexSteps`` that can extract typed values from parameterized text:
 
     class GivenWhenThenSpec extends org.specs2.Specification { def is =
       "A given-when-then example for GCD"                   ^
@@ -37,6 +38,8 @@ For all the ceremony in the previous ``GivenWhenThenSpec``, it's dreadful:
 - it tests only a single case
 - we have to supply all the inputs and expectations by hand.  *Yawn.*
 - how long would it take us to cover a halfway decent set of data?
+<br/>
+<br/>
 
 Generating test case data by hand is a drag.  [ScalaCheck](http://code.google.com/p/scalacheck/) to the rescue!
 
@@ -45,6 +48,8 @@ Generating test case data by hand is a drag.  [ScalaCheck](http://code.google.co
 - a property is a _testable unit_ that specifies the behaviour of a method
     - properties created from functions require an implciit ``Arbitrary[T]`` instance
 - generators are responsible for generating data in ScalaCheck
+<br/>
+<br/>
 
 Consult the [ScalaCheck User Guide](http://code.google.com/p/scalacheck/wiki/UserGuide) for a detailed explanation
 of property and generator types.
@@ -117,6 +122,7 @@ the results of an indepdendent Euclidian GCD algorithm.
     [info]
     [info] == prasinous.acceptance.ScalaCheckGwtSpec ==
 
-And if we decide to run the expectation **1,000** times, all we have to do is change some inputs to ``choose``.
+And if we decide to run the expectation **10,000** times, all we have to do is change some inputs to ``choose``.
+
 
 <img class="logo" src="/img/novus-logo.gif" />
