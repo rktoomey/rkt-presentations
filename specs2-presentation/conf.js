@@ -1,6 +1,9 @@
 {
   "title": "specs2",
   "sections": [
-    "specs"
+    "specs",
+    "matchers",
+    "scalacheck",
+    "credits"
   ]
 }
