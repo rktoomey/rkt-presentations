@@ -55,23 +55,6 @@ Salat is lightweight and doesn't slow you down through use of runtime reflection
 
 !SLIDE
 
-# Getting started
-
-### Add the Novus repos and the salat-core dependency to your sbt project
-
-    val novusRepo = "Novus Release Repository" at "http://repo.novus.com/releases/"
-    val novusSnapsRepo = "Novus Snapshots Repository" at "http://repo.novus.com/snapshots/"
-
-    val salat = "com.novus" %% "salat-core" % "0.0.8-SNAPSHOT"
-
-### Import Salat implicits and default context
-
-    import com.novus.salat._
-    import com.novus.salat.annotations._
-    import com.novus.salat.global._
-
-!SLIDE
-
 # Availability
 
 The latest release, Salat 0.0.7, is available for Scala 2.8.1.
@@ -94,6 +77,61 @@ Salat has dependencies on the latest releases of:
 - scalap, a Scala library that provides functionality for parsing Scala-specific information out of classfiles
 - [mongo-java-driver](http://www.mongodb.org/display/DOCS/Java+Language+Center), the official Java driver for MongoDB
 - [casbah-core](http://api.mongodb.org/scala/casbah/current/), the official Scala toolkit for MongoDB
+
+!SLIDE
+
+# Getting started
+
+### Add the Novus repos and the salat-core dependency to your sbt project
+
+    val novusRepo = "Novus Release Repository" at "http://repo.novus.com/releases/"
+    val novusSnapsRepo = "Novus Snapshots Repository" at "http://repo.novus.com/snapshots/"
+
+    val salat = "com.novus" %% "salat-core" % "0.0.8-SNAPSHOT"
+
+### Import Salat implicits and default context
+
+    import com.novus.salat._
+    import com.novus.salat.annotations._
+    import com.novus.salat.global._
+
+!SLIDE
+
+# Try it out!
+
+The sample code shown in this presentation is available at [rktoomey/mongonyc2011-salat-examples](https://github.com/rktoomey/mongonyc2011-salat-examples).
+<br/>
+<br/>
+You can build and run the project using [simple-build-tool](http://code.google.com/p/simple-build-tool/).
+<br/>
+<br/>
+The quickest way to get started experimenting is to clone the project and run ``sbt console`` to use a Scala
+interpreter with a classpath that includes compiled sources and managed libs:
+
+    ~ $ git://github.com/rktoomey/mongonyc2011-salat-examples.git
+    ~ $ cd mongonyc2011-salat-examples
+    ~/mongonyc2011-salat-examples $ sbt console
+
+!SLIDE
+
+# How to import what you need
+
+You can try out the sample code shown in this presentation by running ``sbt console`` with these imports:
+
+    Welcome to Scala version 2.9.0.1 (Java HotSpot(TM) 64-Bit Server VM, Java 1.6.0_24).
+    Type in expressions to have them evaluated.
+    Type :help for more information.
+
+    scala> import com.novus.salat._
+
+    scala> import com.novus.salat.global._
+
+    scala> import com.novus.salat.annotations._
+
+    scala> import com.mongodb.casbah.Imports._
+
+    scala> import prasinous._
+
 
 !SLIDE
 
@@ -179,42 +217,6 @@ Salat's top level package object:
 
     grater[Alpha].asObject(dbo)
 
-!SLIDE
-
-# Try it out!
-
-The sample code shown in this presentation is available at [rktoomey/mongonyc2011-salat-examples](https://github.com/rktoomey/mongonyc2011-salat-examples).
-<br/>
-<br/>
-You can build and run the project using [simple-build-tool](http://code.google.com/p/simple-build-tool/).
-<br/>
-<br/>
-The quickest way to get started experimenting is to clone the project and run ``sbt console`` to use a Scala
-interpreter with a classpath that includes compiled sources and managed libs:
-
-    ~ $ git://github.com/rktoomey/mongonyc2011-salat-examples.git
-    ~ $ cd mongonyc2011-salat-examples
-    ~/mongonyc2011-salat-examples $ sbt console
-
-!SLIDE
-
-# How to import what you need
-
-You can try out the sample code shown in this presentation by running ``sbt console`` with these imports:
-
-    Welcome to Scala version 2.9.0.1 (Java HotSpot(TM) 64-Bit Server VM, Java 1.6.0_24).
-    Type in expressions to have them evaluated.
-    Type :help for more information.
-
-    scala> import com.novus.salat._
-
-    scala> import com.novus.salat.global._
-
-    scala> import com.novus.salat.annotations._
-
-    scala> import com.mongodb.casbah.Imports._
-
-    scala> import prasinous._
 
 !SLIDE
 
@@ -477,8 +479,8 @@ as is or as the basis for your own DAO implementation.
 
 By extending `SalatDAO`, you can do the following out of box:
 
-- insert and get back an Option with the id
-- findOne and get back an Option typed to your case class
+- insert and get back an `Option` with the id
+- findOne and get back an `Option` typed to your case class
 - find and get back a Mongo cursor typed to your class
   - iterate, limit, skip and sort
 - update with a query and a case class
@@ -710,6 +712,19 @@ Mailing List
 Twitter
 <br/>
 [@prasinous](http://twitter.com/prasinous)
+
+!SLIDE
+
+# Who's using Salat?
+
+- [salat-avro](https://github.com/T8Webware/salat-avro), Fast bi-directional Scala case class to Avro serialization
+- [smidm](https://github.com/wstrange/smidm), An experimental identity sync manager using Scala and Mongo and the Identity Connector Framework
+
+# Projects that make use of Salat's approach to ScalaSig
+
+- [Jerkson](https://github.com/codahale/jerkson), a Scala wrapper for Jackson which brings Scala's ease-of-use to Jackson's features
+- [scala-mongo-thingy](https://github.com/havocp/mongo-scala-thingy), a MongoDB -> BSON AST -> (JSON or CaseClass) pipeline
+
 <br/>
 <br/>
 Is your project using Salat?  Let us know about it!
