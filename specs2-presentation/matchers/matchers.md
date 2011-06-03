@@ -49,6 +49,10 @@ Using ``only`` and ``inOrder`` we can state this in one shot:
 
 # JSON matchers
 
+<span class="clarification">The JSON matchers rely on the standard Scala libs.</span>
+<br/>
+<br/>
+
 ``/(value)`` looks for a value at the root of an Array
 
     """["name", "Joe" ]""" must /("name")
@@ -70,7 +74,6 @@ JSON matchers can be chained:
 
     """{ "person": { "name": "Joe" } }""" must /("person") /("name" -> "Joe")
 <br/>
-
 See [JsonMatchersSpec](https://github.com/etorreborre/specs2/blob/master/src/test/scala/org/specs2/matcher/JsonMatchersSpec.scala)
 in the specs2 project specs for more details.
 

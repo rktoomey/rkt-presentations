@@ -2,34 +2,66 @@
 
 <p style="font-size: 70px; color: #16325A;">specs2</p>
 <br/>
+<span class="big_new">the remix, now complete with user Q & A</span>
 <br/>
 <br/>
 <br/>
 <p style="font-size: 45px; color: #16325A; font-style: italic;">What's new in the Scala BDD world?</p>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
 [http://specs2.org](http://specs2.org)
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+Rose Toomey
+<br/>
+[ny-scala](http://www.meetup.com/ny-scala/) @ 24 May 2011
+<br/>
+<span class="new">Revised 2 June with assistance from Eric Torreborre</span>
+
+!SLIDE
+
+# Been here before?  Your key to the remix
+<br/>
+The existing presentation has been marked up for your convenience:
+<br/>
+<br/>
+<span class="new">This is new content.</span>
+<br/>
+<br/>
+<span class="wrong">This content was wrong.</span>  So please delete it from your memory banks.
+<br/>
+<br/>
+<span class="correction">This is a correction.</span>
+<br/>
+<br/>
+<span class="clarification">This is a clarification.</span>
+<br/>
+<br/>
+<span class="eric">This is what Eric Torreborre said.</span>
 
 !SLIDE
 
 # specs2: State of the art executable software specifications
 
 - The evolution of specs2
+    - <span class="clarification">Availability</span>
 - Field guide to specs2
     - acceptance specs
     - unit specs
+    - <span class="correction">Explanation of thrown expectations</span>
 - Migrating to specs2
     - Test case: migrating Salat
     - Configuring specs2
 - Cool new features of specs2
     - JSON matchers
     - Specs2 matchers in the wild
-    - Contexts
+    - <span class="clarification">Contexts</span>
     - Scalacheck
 - Online Resources
+- <span class="new">User Q & A</span>
 
 !SLIDE
 
@@ -39,6 +71,8 @@ specs is a DSL in Scala for doing BDD (Behaviour-Driven Development).
 <br/>
 <br/>
 specs2 is a <b><i>complete rewrite</i></b> of specs 1.x.
+<br/>
+<br/>
 
 ## The design principles of specs2
 <ol>
@@ -47,6 +81,36 @@ specs2 is a <b><i>complete rewrite</i></b> of specs 1.x.
   <li>Control the dependencies (no cycles)</li>
   <li>Control the scope of implicits</li>
 </ol>
+<br/>
+<br/>
+<span class="eric">
+Eric Torreborre, the creator of specs and specs2, will be giving a presentation on the
+design philosophy of specs2 later this June.
+<br/>
+<br/>
+Follow <a href="http://twitter.com/specs2">@specs2</a> on Twitter for details!
+</span>
+
+!SLIDE
+
+# Availability
+
+<span class="clarification">If you're lookin</span>
+
+## specs2
+
+<span class="eric"><b>Eric:</b> specs2 will not be available for Scala 2.7.7 because it depends on
+named parameters.</span>
+
+specs2 is available for Scala 2.8.0, 2.8.1, 2.9.0 and 2.9.0-1.
+
+## specs
+
+specs 1.6.x is available for Scala 2.7.7, 2.8.1 and 2.9.0:
+- [http://scala-tools.org/repo-releases/org/scala-tools/testing/specs_2.7.7/1.6.1/]
+- [http://scala-tools.org/repo-releases/org/scala-tools/testing/specs_2.8.0/1.6.5/]
+- [http://scala-tools.org/repo-releases/org/scala-tools/testing/specs_2.8.1/1.6.8/]
+- [http://scala-tools.org/repo-releases/org/scala-tools/testing/specs_2.9.0/1.6.8/]
 
 !SLIDE
 
@@ -358,6 +422,12 @@ Yields:
 
 # Thrown expectations: a big difference
 
+<span class="eric">
+<b>Eric:</b> If you mix ThrownExpectations to an Acceptance Spec it will change the behavior so that any
+matcher failing will stop the execution of an example.
+</span>
+<br/>
+<br/>
 Acceptance specs matcher behaviour is to return an ``Expectable`` which handles applying the matcher
 and returning a ``Result``.
 <br/>
@@ -368,8 +438,17 @@ Unit specs throw expectations as soon as they fail.
 If you want acceptance specs to throw expectations like unit specs, mix in ``ThrownExpectations``.
 <br/>
 <br/>
+<span class="wrong">
 It doesn't change the functional behaviour of acceptance specs (i.e. only the returned ``Result``
 will affect the final outcome), but it's useful for interfacing with other test frameworks.
+</span>
+<br/>
+<br/>
+<span class="correction">
+My spec exposed a bug which has been fixed in specs2 1.4-SNAPSHOT.  Run <code>prasinous.acceptance.ThrownExceptionsDemo</code> in
+the sample code to see how mixing in <code>ThrownExpectations</code> makes this acceptance spec fail just like
+<code>prasinous.unit.NotFunctionalDemoSpec</code> in the previous slide.
+</span>
 
 
 <img class="logo" src="/img/novus-logo.gif" />

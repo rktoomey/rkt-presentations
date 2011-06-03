@@ -124,5 +124,30 @@ the results of an indepdendent Euclidian GCD algorithm.
 
 And if we decide to run the expectation **10,000** times, all we have to do is change some inputs to ``choose``.
 
+!SLIDE
+
+# Using ScalaCheck with unit specs
+
+<span class="new">See <code>prasinous.unit.ScalaCheckGwtUnitSpec</code> TODO doesn't actually compile yet</span>
+
+    class ScalaCheckGwtUnitSpec extends Specification with ScalaCheck {
+      "Testing Binary GCD calculator" {
+        "Given the following number n1" ! given[Long] {      // where does given come from?  can't figure out imports!
+          def extract(text: String) = choose(-10L, 10L)
+        }
+        "And the following number n2" ! when[Long, (Long, Long)] {
+          def extract(number1: Long, text: String) = for {n2 <- choose(-10L, 10L)} yield (number1, n2)
+        }
+        "When we take the greatest common denominator" ! when[(Long, Long), BinaryGCD] {
+          def extract(numbers: (Long, Long), text: String) = BinaryGCD(numbers._1, numbers._2)
+        }
+        "Then the binary GCD matches the Euclidian GCS " ! then[BinaryGCD] {
+          def extract(text: String)(implicit op: Arbitrary[BinaryGCD]) =
+            check {
+              (op: BinaryGCD) => op.gcd must_== EuclidianGCD(op.u, op.v)
+            }
+        }
+      }
+    }
 
 <img class="logo" src="/img/novus-logo.gif" />

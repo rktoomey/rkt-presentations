@@ -6,6 +6,7 @@
     "matchers",
     "runners",
     "scalacheck",
+    "qa",
     "credits"
   ]
 }

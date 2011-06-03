@@ -2,6 +2,12 @@
 
 # Migrating to specs2
 
+<span class="eric">
+<b>Eric:</b> The best way to introduce concurrency into examples is to isolate the mutable variables.
+</span>
+<br/>
+<br/>
+
 - unit specs - the path of least resistance
 - acceptance specs - requires complete restructuring, but in exchange for substantial benefits
 <br/>
