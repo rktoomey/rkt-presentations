@@ -7,7 +7,7 @@
     - <span class="clarification">Updated</span> [User Guide](http://etorreborre.github.com/specs2/guide/org.specs2.UserGuide.html)
     - [Sample project](https://github.com/etorreborre/specs2-test)
     - [User Group](http://groups.google.com/group/specs2-users)
-    - [@spec2.org]()
+    - [@specs2.org](http://twitter.com/#!/specs2org)
 <br/>
 
 - Eric Torreborre

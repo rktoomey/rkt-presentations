@@ -19,7 +19,7 @@ Rose Toomey
 <br/>
 [ny-scala](http://www.meetup.com/ny-scala/) @ 24 May 2011
 <br/>
-<span class="new">Revised 2 June with assistance from Eric Torreborre</span>
+<span class="new">Revised 6 June with assistance from Eric Torreborre</span>
 
 !SLIDE
 
