@@ -89,7 +89,7 @@ design philosophy of specs2 at <a href="http://fp-syd.ouroborus.net/">
 Functional Programming Sydney</a> in July.
 <br/>
 <br/>
-Follow <a href="http://twitter.com/specs2">@specs2</a> on Twitter for details!
+Follow <a href="http://twitter.com/specs2">@specs2.org</a> on Twitter for details!
 </span>
 
 !SLIDE
@@ -98,8 +98,14 @@ Follow <a href="http://twitter.com/specs2">@specs2</a> on Twitter for details!
 
 ## specs2
 
-<span class="eric"><b>Eric:</b> specs2 will not be available for Scala 2.7.7 because it depends on
-named parameters.</span>
+<span class="eric"><b>Eric:</b>
+<br/>
+<br/>
+specs2 will not be available for Scala 2.7.7 because it depends on named parameters.
+<br/>
+<br/>
+I have to maintain a separate branch for 2.8.x and 2.9.x so SNAPSHOTs will be more frequent on 2.9.0-1.
+</span>
 <br/>
 <br/>
 specs2 is available for Scala 2.8.0, 2.8.1, 2.9.0 and 2.9.0-1.
@@ -441,7 +447,7 @@ will affect the final outcome), but it's useful for interfacing with other test 
 <br/>
 <br/>
 <span class="correction">
-My spec exposed a bug which was promptly fixed in specs2 1.4-SNAPSHOT, which has just been released.
+My spec exposed a bug which was promptly fixed in specs2 1.4, which has just been released.
 </span>
 
 !SLIDE

@@ -36,8 +36,8 @@ My strategy was as follows:
 
 Drop in place and go:
 
-    val specs2 = "org.specs2" %% "specs2" % "1.3"
-    val scalaz = "org.specs2" %% "specs2-scalaz-core" % "6.0.RC2"
+    val specs2 = "org.specs2" %% "specs2" % "1.4" % "test"
+    val scalaz = "org.specs2" %% "specs2-scalaz-core" % "6.0.RC2" % "test"
 
     def specs2Framework = new TestFramework("org.specs2.runner.SpecsFramework")
     override def testFrameworks = super.testFrameworks ++ Seq(specs2Framework)
@@ -68,8 +68,12 @@ Drop in place and go:
 
 # Migrating to specs2: restructuring my test trait
 
-## After
+<span class="clarification">The preferred way to do this should be using <code>map</code> as shown in
+<a href="http://etorreborre.github.com/specs2/guide/org.specs2.guide.SpecStructure.html#Generic+specification+with+setup+and+teardown+steps">
+Generic specification with setup and teardown steps</a>.
+</span>
 
+## After (the way I originally did it)
     trait SalatSpec extends Specification with Logging {
       val SalatSpecDb = "test_salat"
       override def is =
@@ -84,10 +88,33 @@ Drop in place and go:
 
     }
 
+## After (now using <code>map</code>)
+    trait SalatSpec extends Specification with Logging {
+       override def map(fs: =>Fragments) = Step {
+         com.mongodb.casbah.commons.conversions.scala.RegisterConversionHelpers()
+         com.mongodb.casbah.commons.conversions.scala.RegisterJodaTimeConversionHelpers()
+      } ^ fs ^ Step {
+        MongoConnection().dropDatabase(SalatSpecDb)
+      }
+    }
+
+!SLIDE
+
+# Migrating to specs2: restructuring my test trait
+
 - No more ``detailedDiffs()`` - the default settings were good enough:
 - No more ``PendingUntilFixed`` - in specs2 this is now part of the common specification features
+
+## Setup and teardown (before using <code>map</code>)
 - ``doBeforeSpec`` has been replaced by overriding ``is`` with a ``Step`` to register Casbah's conversion helpers
 - ``doAfterSpec`` has been replaced by using ``^`` to glue a final step onto the supertrait's ``is`` method
+
+## Setup and teardown (using <code>map</code>)
+
+<span class="clarification">
+<code>doBeforeSpec</code> and <code>doAfterSpec</code> have been replaced by using <code>map</code> to clearly define
+that a <code>Step</code> occurs before my <code>Fragment</code>s and after.
+</span>
 
 !SLIDE
 
@@ -124,6 +151,9 @@ MongoDB collection.
 
       override def is = args(sequential = true) ^ super.is
 
+<span class="clarification">
+You can use just <code>sequential</code> as a shortcut for <code>args(sequential = true)</code> because it's frequently used.
+</span>
 
 !SLIDE
 
@@ -183,7 +213,7 @@ In sbt, you can pass in arguments: the example shown below will output to both c
 
 !SLIDE
 
-# JUnit Integratation
+# JUnit Integration
 
     class WithJUnitSpec extends SpecificationWithJUnit {
       "My spec" should {

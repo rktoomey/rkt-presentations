@@ -198,7 +198,7 @@ There have been numerous discussion of acceptance spec style and purpose on the 
 <b>Eric:</b>
 <br/>
 <br/>
-One thing I noticed is that I often split examples in 2:
+One thing I noticed is that I often split examples in two:
 <br/>
 <code>
   "this should do that" ! e1^
@@ -223,17 +223,21 @@ Compare and contrast specs/specs2 with ScalaTest.
 Speaking personally, I started out with ScalaTest at work but quickly found specs to be a better tool for me.
 <br/>
 <br/>
-Although ScalaTest appeared more direct to me at first, coming from a JUnit/TestNG background, the errors
-when tests failed were difficult to work with.  When I was just starting out in Scala, trying to figure out where
-in an N-deep level nest of anonymous inner classes some expectation failed was very daunting to me.  Dynamic matchers
-seemed initially appealing when I wanted to check values within an object graph but turned into a maintence nightmare
-when I refactored model objects.
+Although ScalaTest appeared more direct to me at first, coming from a JUnit/TestNG background, over a period of two months
+I became dissatisfied:
+
+- the errors when tests failed were difficult to work with.  When I was just starting out in Scala, trying to figure out where
+in an N-deep level nest of anonymous inner classes some expectation failed was very daunting to me.
+- ScalaTest dynamic matchers seemed initially appealing when I wanted to check values within an object graph but turned
+into a maintenance nightmare when I refactored model objects.
 <br/>
 <br/>
-In simple testing setups ScalaTest and specs appear quite similar, so my transition from ScalaTest to specs was quite
-rapid.  I appreciated the clean syntax of specs, and I liked the matcher syntax more than ScalaTest's.  When my test
-cases failed, the errors made it extremely easy to target the failing lines.  So it was a natural for me to migrate
-Salat to specs2 when it was released.
+I saw that some open source projects I liked were using specs, so I gave it a try.  I appreciated the clean syntax of specs,
+and I liked the matcher syntax more than ScalaTest's.
+<br/>
+<br/>
+In simple testing setups ScalaTest and specs appear quite similar, so my transition from ScalaTest to specs was quite rapid.
+When my test cases failed, the errors made it extremely easy to target the failing lines.
 
 !SLIDE
 
@@ -243,9 +247,15 @@ Compare and contrast specs/specs2 with ScalaTest.
 
 ## My personal experience, continued
 
+Although I came to specs for its simplicity, in the long run what kept me using specs was its power.  So it was a natural
+for me to migrate Salat to specs2 when it was released.  specs2, although a complete rewrite, had everything I liked about
+specs 1.x plus many new powerful features I could use to isolate mutability in my specs.
+<br/>
+<br/>
 That said, Akka uses ScalaTest, and I quite admire the style and thoroughness of their tests as a model for anyone who
 wants to use ScalaTest.
 <br/>
 <br/>
-There are a number of discussions online.  Here's a good StackOverflow thread with a comparison from Bill Venners:
-- http://stackoverflow.com/questions/2220815/whats-the-difference-between-scalatest-and-scala-specs-unit-test-frameworks
+There have been numerous discussions online.  Here's a good StackOverflow thread with a comparison from Bill Venners:
+
+- [What's the difference between ScalaTest and Scala Specs unit test frameworks?](http://stackoverflow.com/questions/2220815/whats-the-difference-between-scalatest-and-scala-specs-unit-test-frameworks)

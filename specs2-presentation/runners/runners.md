@@ -11,7 +11,7 @@ Also, see this helpful <a href="https://gist.github.com/997433">gist</a> showing
 to reduce duplication.
 </span>
 
-When you want to make sure that something happens for every examples, use any combination of these traits:
+When you want to make sure that something happens for every example, use any combination of these traits:
 
 - ``Before``
 - ``After``

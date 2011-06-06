@@ -131,25 +131,21 @@ And if we decide to run the expectation **10,000** times, all we have to do is c
 <span class="eric"><b>Eric:</b> I'm not actually sure how feasible this is actually because the GivenWhenThen steps in an
 Acceptance spec are very typechecked. In a mutable spec I would need to do runtime checks and have additional
 variables.</span>
-
+<br/>
+<br/>
 If there _were_ suport for it, Eric suggests it might look like this:
 
     class ScalaCheckGwtUnitSpec extends Specification with ScalaCheck {
       "Testing Binary GCD calculator" {
-        "Given the following number n1" ! given[Long] {
-          def extract(text: String) = choose(-10L, 10L)
+        "Given the following number n1" ! given { choose(-10L, 10L) }
+        "And the following number n2"   ! when { (number1: Long, text: String) =>
+           for {n2 <- choose(-10L, 10L)} yield (number1, n2)
         }
-        "And the following number n2" ! when[Long, (Long, Long)] {
-          def extract(number1: Long, text: String) = for {n2 <- choose(-10L, 10L)} yield (number1, n2)
+        "When we take the greatest common denominator" ! when { (numbers: (Long, Long), text: String) =>
+          BinaryGCD(numbers._1, numbers._2)
         }
-        "When we take the greatest common denominator" ! when[(Long, Long), BinaryGCD] {
-          def extract(numbers: (Long, Long), text: String) = BinaryGCD(numbers._1, numbers._2)
-        }
-        "Then the binary GCD matches the Euclidian GCS " ! then[BinaryGCD] {
-          def extract(text: String)(implicit op: Arbitrary[BinaryGCD]) =
-            check {
-              (op: BinaryGCD) => op.gcd must_== EuclidianGCD(op.u, op.v)
-            }
+        "Then the binary GCD matches the Euclidian GCS " ! then check { (op: BinaryGCD) =>
+          op.gcd must_== EuclidianGCD(op.u, op.v)
         }
       }
     }
