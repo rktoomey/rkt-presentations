@@ -34,6 +34,36 @@ June 2011 @ MongoNYC
 
 !SLIDE
 
+# What is Scala?
+
+- [http://www.scala-lang.org](http://www.scala-lang.org)
+- [http://typesafe.com/technology/scala](http://typesafe.com/technology/scala)
+
+<br/>
+<br/>
+Scala is a statically-typed object-oriented open source language that runs on the JVM.
+
+- functional
+- extensible
+- interoperable with Java
+
+!SLIDE
+
+# What is Casbah?
+
+- [MongoDB - Drivers - Java Language Center](http://www.mongodb.org/display/DOCS/Java+Language+Center)
+- [http://api.mongodb.org/scala/casbah/current/](http://api.mongodb.org/scala/casbah/current/)
+
+<br/>
+<br/>
+Casbah is the officially-supported Scala toolkit for MongoDB that provides an intergration layer on top of the offical [mongo-java-driver](http://github.com/mongodb/mongo-java-driver).
+<br/>
+<br/>
+Rather than replacing the official Java driver, Casbah uses implicits, and [Pimp my Library](http://www.artima.com/weblogs/viewpost.jsp?thread=179766)
+patterns to enhance the existing Java code.
+
+!SLIDE
+
 # What is Salat?
 
 Salat provides fast, reliable bi-directional serialization between Scala case classes and MongoDB's ``DBObject`` format.
@@ -365,15 +395,18 @@ Salat provides support for converting the following types to something BSON seri
 
 # Roll your own: custom BSON encoding hooks
 
-You can support other types by creating custom BSON hooks.
+You can support other types by creating custom BSON hooks.  For instance, if you needed to serialize a field typed to
+`java.net.URI`, you would need to create a custom BSON hook to handle this type.
 <br/>
 <br/>
-For more information on how to write and use BSON encoding hooks, see the Casbah API docs:
+For more information on how to write and use BSON encoding hooks, see the Casbah API docs and source code:
 
 - [Briefly: Automatic Type Conversions](http://api.mongodb.org/scala/casbah/current/tutorial.html#briefly-automatic-type-conversions)
+- Refer to ``com.mongodb.casbah.commons.conversions.scala.JodaDateTimeHelpers`` to get started.
 
 <br/>
-Refer to ``com.mongodb.casbah.commons.conversions.scala.JodaDateTimeHelpers`` to get started.
+<br/>
+The [Casbah mailing group](http://groups.google.com/group/mongodb-casbah-users) is another valuable resource
 
 !SLIDE
 
@@ -384,6 +417,11 @@ Salat can't support any of these types right now:
 - Nested inner classes (as used in Cake pattern)
 - A class typed at the top-level to a trait or an abstract superclass
 - ``com.mongodb.DBRef``
+
+<br/>
+<br/>
+Salat can't support these types because the mongo-java-driver doesn't support them:
+
 - Any type of Map whose key is not a String
     - any type of map whose key is a String containing ``.`` or ``$``
 
@@ -736,7 +774,7 @@ Is your project using Salat?  Let us know about it!
 * [Novus](http://www.novus.com) supports the development of Salat
 * [10gen](http://www.10gen.com/) for supporting the ongoing development of [Casbah](http://api.mongodb.org/scala/casbah/current/index.html)
 * [Eric Torreborre](http://twitter.com/etorreborre) for [specs2](http://specs2.org), which I use to write specifications for Salat
-* [Brendan McAdams](http://twitter.com/rit) for [Hammersmith](https://github.com/bwmcadams/hammersmith)
+* [Brendan McAdams](http://twitter.com/rit) for [Casbah](https://github.com/mongodb/casbah/) and [Hammersmith](https://github.com/bwmcadams/hammersmith)
 * [@softprops](http://twitter.com/softprops) for [picture-show](https://github.com/softprops/picture-show)
 
 <img class="logo" src="/img/novus-logo.gif" />
