@@ -2,6 +2,15 @@
 
 # Contexts: making things happen when you need them
 
+<span class="new">
+The specs2 user guide has been updated to provide increased coverage on how to use
+<a href="http://etorreborre.github.com/specs2/guide/org.specs2.guide.SpecStructure.html#Contexts">
+Contexts</a> - go see that immediately.
+<br/>
+Also, see this helpful <a href="https://gist.github.com/997433">gist</a> showing how to use implicit contexts
+to reduce duplication.
+</span>
+
 When you want to make sure that something happens for every examples, use any combination of these traits:
 
 - ``Before``
@@ -13,9 +22,11 @@ Contexts provide an ``apply`` method which can be applied to the body of an exam
 is executed when you need it relative to the example code.
 <br/>
 <br/>
-Contexts of the same type can be composed and/or sequenced.
+Contexts of the same type can be composed and/or sequenced.  <span class="clarafication">Contexts can also extend each
+other to provide more specific setups.</span>
 <br/>
 <br/>
+<span class="clarification"><code>Context</code> now extends <code>Scope</code>.</span>
 Whereas ``Scope`` brings what's inside into context with a mutable spec, a Context is about having
 the appropriate method being executed when and where you need it (http connection, database operations).
 

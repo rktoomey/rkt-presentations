@@ -85,7 +85,8 @@ specs2 is a <b><i>complete rewrite</i></b> of specs 1.x.
 <br/>
 <span class="eric">
 Eric Torreborre, the creator of specs and specs2, will be giving a presentation on the
-design philosophy of specs2 later this June.
+design philosophy of specs2 at <a href="http://fp-syd.ouroborus.net/">
+Functional Programming Sydney</a> in July.
 <br/>
 <br/>
 Follow <a href="http://twitter.com/specs2">@specs2</a> on Twitter for details!
@@ -95,22 +96,17 @@ Follow <a href="http://twitter.com/specs2">@specs2</a> on Twitter for details!
 
 # Availability
 
-<span class="clarification">If you're lookin</span>
-
 ## specs2
 
 <span class="eric"><b>Eric:</b> specs2 will not be available for Scala 2.7.7 because it depends on
 named parameters.</span>
-
+<br/>
+<br/>
 specs2 is available for Scala 2.8.0, 2.8.1, 2.9.0 and 2.9.0-1.
 
 ## specs
 
-specs 1.6.x is available for Scala 2.7.7, 2.8.1 and 2.9.0:
-- [http://scala-tools.org/repo-releases/org/scala-tools/testing/specs_2.7.7/1.6.1/]
-- [http://scala-tools.org/repo-releases/org/scala-tools/testing/specs_2.8.0/1.6.5/]
-- [http://scala-tools.org/repo-releases/org/scala-tools/testing/specs_2.8.1/1.6.8/]
-- [http://scala-tools.org/repo-releases/org/scala-tools/testing/specs_2.9.0/1.6.8/]
+specs 1.6.x is available for Scala 2.7.7, 2.8.1 and 2.9.0 at [scala-tools](http://scala-tools.org/repo-releases/org/scala-tools/testing/).
 
 !SLIDE
 
@@ -445,10 +441,37 @@ will affect the final outcome), but it's useful for interfacing with other test 
 <br/>
 <br/>
 <span class="correction">
-My spec exposed a bug which has been fixed in specs2 1.4-SNAPSHOT.  Run <code>prasinous.acceptance.ThrownExceptionsDemo</code> in
-the sample code to see how mixing in <code>ThrownExpectations</code> makes this acceptance spec fail just like
-<code>prasinous.unit.NotFunctionalDemoSpec</code> in the previous slide.
+My spec exposed a bug which was promptly fixed in specs2 1.4-SNAPSHOT, which has just been released.
 </span>
+
+!SLIDE
+
+# Acceptance spec with thrown expectations mixed in
+
+    class ThrownExceptionsDemo extends Specification with ThrownExpectations { def is =
+
+      "My functional spec demo should"                          ^
+        "show that only the last Result is returned"            ! e1 ^
+        "fail as expected when results are chained together"    ! e2
+
+      def e1 = {
+        1 must beGreaterThan(9999)  // fails because ThrownExpectations was mixed in
+        1 must beLessThanOrEqualTo(1)
+      }
+
+      // fails because first assumption in chain is bad
+      def e2 = 1 must beGreaterThan(9999) and beLessThanOrEqualTo(1)
+    }
+
+
+Fails just like a mutable spec because `ThrownExpectations` is mixed in:
+
+    [info] == prasinous.acceptance.ThrownExceptionsDemo ==
+    [info] My functional spec demo should
+    [error] x show that only the last Result is returned
+    [error]     1 is less than 9999 (ThrownExceptionsDemo.scala:9)
+    [error] x fail as expected when results are chained together
+    [error]     1 is less than 9999 (ThrownExceptionsDemo.scala:10)
 
 
 <img class="logo" src="/img/novus-logo.gif" />

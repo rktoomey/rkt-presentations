@@ -12,6 +12,7 @@
 - Eric Torreborre
     - [@etorreborre](http://twitter.com/#!/etorreborre)
     - [Blog](http://etorreborre.blogspot.com/)
+    - <span class="new">NEW</span> [specs2 migration guide](http://etorreborre.blogspot.com/2011/05/specs2-migration-guide.html)
 <br/>
 
 - Other projects mentioned in these slides
@@ -44,5 +45,7 @@
 - [@etorreborre](http://twitter.com/#!/etorreborre) for writing and beautifully documenting specs2
 - [@softprops](http://twitter.com/softprops) for [picture-show](https://github.com/softprops/picture-show)
 - [Novus Partners](http://www.novus.com) for hosting this [ny-scala](http://www.meetup.com/ny-scala/) meetup
+- [@n8han](http://twitter.com/#!/n8han) for filming this talk
+- all of the attendees at the presentation for displaying such interest and asking so many questions!
 
 <img class="logo" src="/img/novus-logo.gif" />

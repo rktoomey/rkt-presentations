@@ -7,10 +7,15 @@
 </span>
 <br/>
 <br/>
+<span class="new">NEW</span> Eric posted about [specs2 migration](http://etorreborre.blogspot.com/2011/05/specs2-migration-guide.html) on his blog.
 
 - unit specs - the path of least resistance
 - acceptance specs - requires complete restructuring, but in exchange for substantial benefits
 <br/>
+
+!SLIDE
+
+# Migrating to specs2
 
 ## Use case: migrating my own project
 
