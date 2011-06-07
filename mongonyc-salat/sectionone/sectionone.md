@@ -783,6 +783,8 @@ at a recent [ny-scala](http://www.meetup.com/ny-scala/) meetup.
 
 # Finding out more
 
+- Slides for this presentation are posted at [http://repo.novus.com/mongonyc-salat/](http://repo.novus.com/mongonyc-salat/)
+<br/>
 The specs in the Salat source code provide many usage examples.
 <br/>
 <br/>
