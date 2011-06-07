@@ -12,8 +12,6 @@
 <br/>
 <br/>
 <br/>
-<br/>
-<br/>
 [Rose Toomey](http://twitter.com/prasinous), Novus Partners
 <br/>
 June 2011 @ MongoNYC
@@ -46,8 +44,8 @@ Scala is a concise, elegant object-oriented language that runs on the JVM:
 - statically typed
 - functional
 - scalable
-- easy to create libraries and DSLs
--
+- makes it easy to create libraries and DSLs
+- interoperable with Java
 
 !SLIDE
 
@@ -58,7 +56,7 @@ Scala is a concise, elegant object-oriented language that runs on the JVM:
 - [18 Months With Scala: Building a Driver For MongoDB](http://bit.ly/mdOwvl) - Brendan McAdams' presentation to Scala Days 2011 on 3 June
 <br/>
 <br/>
-Casbah is the officially-supported Scala toolkit for MongoDB that provides an intergration layer on top of the offical [mongo-java-driver](http://github.com/mongodb/mongo-java-driver).
+Casbah is the officially-supported Scala toolkit for MongoDB that provides an intergration layer on top of the [mongo-java-driver](http://github.com/mongodb/mongo-java-driver).
 <br/>
 <br/>
 Rather than replacing the official Java driver, Casbah uses implicits, and [Pimp my Library](http://www.artima.com/weblogs/viewpost.jsp?thread=179766)
@@ -131,7 +129,9 @@ Salat has dependencies on the latest releases of:
 
 # Try it out!
 
-The sample code shown in this presentation is available at [rktoomey/mongonyc2011-salat-examples](https://github.com/rktoomey/mongonyc2011-salat-examples).
+The sample code shown in this presentation is available at:
+<br/>
+[rktoomey/mongonyc2011-salat-examples](https://github.com/rktoomey/mongonyc2011-salat-examples).
 <br/>
 <br/>
 You can build and run the project using [simple-build-tool](http://code.google.com/p/simple-build-tool/).
@@ -422,7 +422,7 @@ Salat can't support any of these types right now:
 
 <br/>
 <br/>
-Salat can't support these types because the mongo-java-driver doesn't support them:
+Salat can't support these types because the [mongo-java-driver](http://github.com/mongodb/mongo-java-driver) doesn't support them:
 
 - Any type of Map whose key is not a String
     - any type of map whose key is a String containing ``.`` or ``$``
@@ -725,11 +725,11 @@ works with the Lift web framework
 
  - [HighChair](https://github.com/chrislewis/highchair) - created by [Chris Lewis](http://twitter.com/#!/chrslws), this toolset for
  developing Google App Engine services and applications in Scala includes a type-safe query DSL that provides a feel intentionally
- similar to [Rogue](https://github.com/foursquare/rogue) but without the Lift dependency
+ similar to [Rogue](https://github.com/foursquare/rogue) but for Google data store instead of Lift/MongoDB
 
 !SLIDE
 
-# Query DSLs
+# Dealing with SQL
 
 ## Type-safe SQL
 
@@ -737,7 +737,7 @@ works with the Lift web framework
 - [scala-query](https://github.com/szeiger/scala-query)
 - [Circumflex ORM](http://circumflex.ru/projects/orm/index.html)
 
-# Plain SQL but a plusher ride
+## Plain SQL but a plusher ride
 
 - [Anorm](http://scala.playframework.org/documentation/scala-0.9/anorm), SQL data access with Play Scala
 - [Querulous](https://github.com/twitter/querulous)
@@ -752,7 +752,7 @@ works with the Lift web framework
 # Projects that make use of Salat's approach to ScalaSig
 
 - [Jerkson](https://github.com/codahale/jerkson), [@coda](http://twitter.com/coda)'s Scala wrapper for Jackson which brings Scala's ease-of-use to Jackson's features
-- [scala-mongo-thingy](https://github.com/havocp/mongo-scala-thingy), a MongoDB -> BSON AST -> (JSON or CaseClass) pipeline from [@havocp](http://twitter.com/havocp)
+- [beaucatcher](http://beaucatcher.org/), a Scala MongoDB API with async and BSON AST -> (JSON or CaseClass) pipeline from [@havocp](http://twitter.com/havocp)
 
 <br/>
 <br/>
@@ -765,7 +765,8 @@ Is your project using Salat?  Let us know about it!
 We're working to make the code in Salat more modular and general purpose.
 
 - our tools for working with pickled Scala signatures will be moved to `salat-util`, a standalone module without dependencies
-- the current `salat-core` module will contain
+- the current `salat-core` module will contain a generic framework for managing contexts and transformers
+    - submodules will provide additional `Grater` capabilities by providing a transformer implementation
 - the Casbah dependencies will be moved out to `salat-casbah` in preparation for adding...
 - a new Salat module for using Brendan McAdams' [Hammersmith](https://github.com/bwmcadams/hammersmith) project
 
@@ -784,8 +785,8 @@ at a recent [ny-scala](http://www.meetup.com/ny-scala/) meetup.
 # Finding out more
 
 - Slides for this presentation are posted at [http://repo.novus.com/mongonyc-salat/](http://repo.novus.com/mongonyc-salat/)
-<br/>
-The specs in the Salat source code provide many usage examples.
+- Sample code used in this presentation is available at [rktoomey/mongonyc2011-salat-examples](https://github.com/rktoomey/mongonyc2011-salat-examples)
+- The specs in the Salat source code provide many usage examples.
 <br/>
 <br/>
 Github
@@ -811,13 +812,14 @@ Twitter
 
 # Thank you
 
-* [Novus](http://www.novus.com) supports the development of Salat
-* [10gen](http://www.10gen.com/) for supporting the ongoing development of [Casbah](http://api.mongodb.org/scala/casbah/current/index.html)
-* [Eric Torreborre](http://twitter.com/etorreborre) for [specs2](http://specs2.org), which I use to write specifications for Salat
-  * see slides for [specs2: What's new in the Scala BDD world?], my recent ny-scala meetup presentation on specs2
-* [Brendan McAdams](http://twitter.com/rit) for [Casbah](https://github.com/mongodb/casbah/) and [Hammersmith](https://github.com/bwmcadams/hammersmith)
-  * and for being a wellspring of constructive inspiration on how open source projects can make things better...
-* [@softprops](http://twitter.com/softprops) for [picture-show](https://github.com/softprops/picture-show)
+- [Novus](http://www.novus.com) supports the development of Salat
+- [10gen](http://www.10gen.com/) for supporting the ongoing development of [Casbah](http://api.mongodb.org/scala/casbah/current/index.html)
+- [Eric Torreborre](http://twitter.com/etorreborre) for [specs2](http://specs2.org), which I use to write specifications for Salat
+    - see slides for [specs2: What's new in the Scala BDD world?](http://repo.novus.com/specs2-presentation/), my recent ny-scala meetup presentation on specs2
+- [Brendan McAdams](http://twitter.com/rit) for [Casbah](https://github.com/mongodb/casbah/) and [Hammersmith](https://github.com/bwmcadams/hammersmith)
+    - and for being a wellspring of constructive inspiration on how open source projects can make things better...
+- [@softprops](http://twitter.com/softprops) for [picture-show](https://github.com/softprops/picture-show), a simple elegant way to make
+slides with Markdown
 
 <img class="logo" src="/img/novus-logo.gif" />
 <img class="mongoDBLogo" src="/img/PoweredMongoDBbeige66.png" />
