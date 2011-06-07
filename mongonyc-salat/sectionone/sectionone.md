@@ -70,18 +70,17 @@ Salat provides fast, reliable bi-directional serialization between Scala case cl
 
 ## Fast
 
-Salat mines pickled Scala signatures, introduced with Scala 2.8.0, for hi-fi type information.
+Salat mines pickled Scala signatures, introduced with Scala 2.8.0, for hi-fi type information.  "Salat" is a transliteration
+of the Russian word "салат", for "salad", because Salat is lightweight and doesn't slow you down through use of runtime reflection.
 
 ## Simple
 
 Salat's design is focused: this is a library for serializing and deserializing Scala case classes.
 
-## No runtime reflection!
+## Focused
 
-"Salat" is a transliteration of the Russian word "салат", for "salad".
-<br/>
-<br/>
-Salat is lightweight and doesn't slow you down through use of runtime reflection.
+Salat is not a fully-fledged ORM and does not attempt to match the flexibility, compability or functionality of an ORM
+that would let you define relationships between classes, provide a query language, or serialize many types of classes.
 
 !SLIDE
 
@@ -718,7 +717,7 @@ Examples are available:
 
 ## Type-safe MongoDB
 
-- [Rogue](https://github.com/foursquare/rogue) - open-sourced by FourSquare, this project provides an internal DSL that
+- [Rogue](https://github.com/foursquare/rogue) - open-sourced by Foursquare, this project provides an internal DSL that
 works with the Lift web framework
 
 ## Type-safe Google data store
@@ -766,7 +765,8 @@ We're working to make the code in Salat more modular and general purpose.
 
 - our tools for working with pickled Scala signatures will be moved to `salat-util`, a standalone module without dependencies
 - the current `salat-core` module will contain a generic framework for managing contexts and transformers
-    - submodules will provide additional `Grater` capabilities by providing a transformer implementation
+    - `salat-core` will have core JSON and BSON transformers
+    - submodules will provide additional `Grater` capabilities by providing additional transformer implementations
 - the Casbah dependencies will be moved out to `salat-casbah` in preparation for adding...
 - a new Salat module for using Brendan McAdams' [Hammersmith](https://github.com/bwmcadams/hammersmith) project
 
@@ -818,6 +818,7 @@ Twitter
     - see slides for [specs2: What's new in the Scala BDD world?](http://repo.novus.com/specs2-presentation/), my recent ny-scala meetup presentation on specs2
 - [Brendan McAdams](http://twitter.com/rit) for [Casbah](https://github.com/mongodb/casbah/) and [Hammersmith](https://github.com/bwmcadams/hammersmith)
     - and for being a wellspring of constructive inspiration on how open source projects can make things better...
+- [Oliver Dodd](https://github.com/oliverdodd) for submitting Salat's first pull request, to provide better `Traversable` support
 - [@softprops](http://twitter.com/softprops) for [picture-show](https://github.com/softprops/picture-show), a simple elegant way to make
 slides with Markdown
 
