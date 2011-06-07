@@ -41,11 +41,13 @@ June 2011 @ MongoNYC
 
 <br/>
 <br/>
-Scala is a statically-typed object-oriented open source language that runs on the JVM.
+Scala is a concise, elegant object-oriented language that runs on the JVM:
 
+- statically typed
 - functional
-- extensible
-- interoperable with Java
+- scalable
+- easy to create libraries and DSLs
+-
 
 !SLIDE
 
@@ -53,7 +55,7 @@ Scala is a statically-typed object-oriented open source language that runs on th
 
 - [MongoDB - Drivers - Java Language Center](http://www.mongodb.org/display/DOCS/Java+Language+Center)
 - [http://api.mongodb.org/scala/casbah/current/](http://api.mongodb.org/scala/casbah/current/)
-
+- [18 Months With Scala: Building a Driver For MongoDB](http://bit.ly/mdOwvl) - Brendan McAdams' presentation to Scala Days 2011 on 3 June
 <br/>
 <br/>
 Casbah is the officially-supported Scala toolkit for MongoDB that provides an intergration layer on top of the offical [mongo-java-driver](http://github.com/mongodb/mongo-java-driver).
@@ -677,7 +679,7 @@ interested in.
 [Morphia](http://code.google.com/p/morphia/), a type-safe Java ORM for MongoDB, provides:
 
 - Fully featured ORM
-    - define relationships between documents using ``@Reference``
+    - define embedded and semantic relationships between objects
     - optimistic locking
     - inheritance strategies for mapping model objects to collections
     - lifecycle method annotations like ``@PrePersist``, ``@PostPersist``, ``@PreLoad``, ``@PostLoad``
@@ -685,13 +687,20 @@ interested in.
 - validation
 
 <br/>
-If you're interested in more information about Morphia, look on [MongoNYC](http://www.10gen.com/conferences/mongonyc2011)
+<span class="new">
+If you're interested in more information about Morphia, look on
+<a href="http://www.10gen.com/conferences/mongonyc2011">MongoNYC 2011</a>
 for slides and video from Scott Hernandez' talk on "Morphia: Easy Java Persistence" this morning.
+</span>
 
 !SLIDE
 
 # Spring Data
 
+<span class="clarification">The Spring Data lead, Mark Pollack from VMWare, is presenting "MongoDB for Java Devs with Spring and CloudFoundry" in
+the Rusack room from 3:00 - 3:30pm</span>
+<br/>
+<br/>
 [Spring Data](http://www.springsource.org/spring-data) is a project to make it easy for Spring
  applications to use non-relational databases, map-reduce frameworks and cloud-based data services.
 <br/>
@@ -707,23 +716,68 @@ Examples are available:
 
 # Query DSLs
 
+## Type-safe MongoDB
+
+- [Rogue](https://github.com/foursquare/rogue) - open-sourced by FourSquare, this project provides an internal DSL that
+works with the Lift web framework
+
+## Type-safe Google data store
+
+ - [HighChair](https://github.com/chrislewis/highchair) - created by [Chris Lewis](http://twitter.com/#!/chrslws), this toolset for
+ developing Google App Engine services and applications in Scala includes a type-safe query DSL that provides a feel intentionally
+ similar to [Rogue](https://github.com/foursquare/rogue) but without the Lift dependency
+
+!SLIDE
+
+# Query DSLs
+
 ## Type-safe SQL
 
 - [squeryl](http://squeryl.org/) - query DSL and an ORM
 - [scala-query](https://github.com/szeiger/scala-query)
 - [Circumflex ORM](http://circumflex.ru/projects/orm/index.html)
 
-## Type-safe MongoDB
-
-- [Rogue](https://github.com/foursquare/rogue) - open-sourced by FourSquare, this project provides an internal DSL that
-works with the Lift web framework
-
-<br/>
-
 # Plain SQL but a plusher ride
 
 - [Anorm](http://scala.playframework.org/documentation/scala-0.9/anorm), SQL data access with Play Scala
 - [Querulous](https://github.com/twitter/querulous)
+
+!SLIDE
+
+# Who's using Salat?
+
+- [salat-avro](https://github.com/T8Webware/salat-avro), Fast bi-directional Scala case class to Avro serialization from T8Webware and [@rubbish](http://twitter.com/rubbish)
+- [smidm](https://github.com/wstrange/smidm), Warren Strange's experimental identity sync manager using Scala and Mongo and the Identity Connector Framework
+
+# Projects that make use of Salat's approach to ScalaSig
+
+- [Jerkson](https://github.com/codahale/jerkson), [@coda](http://twitter.com/coda)'s Scala wrapper for Jackson which brings Scala's ease-of-use to Jackson's features
+- [scala-mongo-thingy](https://github.com/havocp/mongo-scala-thingy), a MongoDB -> BSON AST -> (JSON or CaseClass) pipeline from [@havocp](http://twitter.com/havocp)
+
+<br/>
+<br/>
+Is your project using Salat?  Let us know about it!
+
+!SLIDE
+
+# What happens next?
+
+We're working to make the code in Salat more modular and general purpose.
+
+- our tools for working with pickled Scala signatures will be moved to `salat-util`, a standalone module without dependencies
+- the current `salat-core` module will contain
+- the Casbah dependencies will be moved out to `salat-casbah` in preparation for adding...
+- a new Salat module for using Brendan McAdams' [Hammersmith](https://github.com/bwmcadams/hammersmith) project
+
+!SLIDE
+
+# Briefly: Hammersmith
+
+[Hammersmith](https://github.com/bwmcadams/hammersmith) is a pure asynchronous MongoDB driver for Scala.
+<br/>
+<br/>
+See slides from [Hammersmith: Netty, Scala and MongoDB](http://www.speakerdeck.com/presentations/4dac9ecb5753081d23000002.pdf) - Brendan's presentation
+at a recent [ny-scala](http://www.meetup.com/ny-scala/) meetup.
 
 !SLIDE
 
@@ -753,28 +807,14 @@ Twitter
 
 !SLIDE
 
-# Who's using Salat?
-
-- [salat-avro](https://github.com/T8Webware/salat-avro), Fast bi-directional Scala case class to Avro serialization
-- [smidm](https://github.com/wstrange/smidm), An experimental identity sync manager using Scala and Mongo and the Identity Connector Framework
-
-# Projects that make use of Salat's approach to ScalaSig
-
-- [Jerkson](https://github.com/codahale/jerkson), a Scala wrapper for Jackson which brings Scala's ease-of-use to Jackson's features
-- [scala-mongo-thingy](https://github.com/havocp/mongo-scala-thingy), a MongoDB -> BSON AST -> (JSON or CaseClass) pipeline
-
-<br/>
-<br/>
-Is your project using Salat?  Let us know about it!
-
-!SLIDE
-
 # Thank you
 
 * [Novus](http://www.novus.com) supports the development of Salat
 * [10gen](http://www.10gen.com/) for supporting the ongoing development of [Casbah](http://api.mongodb.org/scala/casbah/current/index.html)
 * [Eric Torreborre](http://twitter.com/etorreborre) for [specs2](http://specs2.org), which I use to write specifications for Salat
+  * see slides for [specs2: What's new in the Scala BDD world?], my recent ny-scala meetup presentation on specs2
 * [Brendan McAdams](http://twitter.com/rit) for [Casbah](https://github.com/mongodb/casbah/) and [Hammersmith](https://github.com/bwmcadams/hammersmith)
+  * and for being a wellspring of constructive inspiration on how open source projects can make things better...
 * [@softprops](http://twitter.com/softprops) for [picture-show](https://github.com/softprops/picture-show)
 
 <img class="logo" src="/img/novus-logo.gif" />

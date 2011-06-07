@@ -51,7 +51,7 @@ Salat has dependencies on the latest releases of:
     val novusRepo = "Novus Release Repository" at "http://repo.novus.com/releases/"
     val novusSnapsRepo = "Novus Snapshots Repository" at "http://repo.novus.com/snapshots/"
 
-    val salat = "com.novus" %% "salat-core" % "0.0.7-SNAPSHOT"
+    val salat = "com.novus" %% "salat-core" % "0.0.8-SNAPSHOT"
 
 <br/>
 
